@@ -16,8 +16,8 @@ header {
     width: 100%;
     z-index: 1000;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transform: translateY(-100%);
-    animation: slideDown 1s ease forwards;
+    opacity: 0;
+    animation: fadeIn 1s ease forwards; /* Changed slideDown to fadeIn for smooth visibility */
 }
 header nav {
     display: flex;
@@ -63,6 +63,16 @@ header nav ul li a:hover::after {
     transform-origin: bottom left;
 }
 
+/* Keyframes for fadeIn animation */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
 /* Hero Section */
 .hero {
     height: 100vh;
@@ -74,7 +84,7 @@ header nav ul li a:hover::after {
     text-align: center;
     padding: 2rem;
     opacity: 0;
-    animation: fadeIn 2s ease-in-out forwards;
+    animation: fadeInHero 2s ease-in-out forwards; /* Animation for hero section */
 }
 .hero .highlight {
     color: #f4d03f;
@@ -89,6 +99,16 @@ header nav ul li a:hover::after {
 .hero p {
     font-size: 1.3rem;
     margin: 20px 0;
+}
+
+/* Keyframes for Hero Section Fade In */
+@keyframes fadeInHero {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
 }
 
 /* Buttons */
@@ -118,18 +138,16 @@ header nav ul li a:hover::after {
 #about {
     padding: 3rem 1rem;
     background: #f9f9f9;
-    opacity: 1; /* Ensure the section is visible by default */
-    animation: slideIn 2s ease-out forwards; /* Corrected the animation */
-    z-index: 10; /* Make sure it's on top of any other content */
-    position: relative; /* Ensure it's positioned properly */
+    opacity: 1;
+    animation: slideIn 2s ease-out forwards;
+    z-index: 10;
+    position: relative;
 }
 .about-content {
     display: flex;
     align-items: center;
     justify-content: space-around;
     gap: 2rem;
-    opacity: 1; /* Ensure the content is visible */
-    animation: slideInLeft 1.5s ease-out forwards; /* Fix the animation on content */
 }
 .about-content img {
     border-radius: 50%;
@@ -140,44 +158,18 @@ header nav ul li a:hover::after {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Keyframes */
-@keyframes slideIn {
-    0% {
-        opacity: 0;
-        transform: translateY(20px); /* Ensure it slides up correctly */
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes slideInLeft {
-    0% {
-        opacity: 0;
-        transform: translateX(-100%);
-    }
-    100% {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-
 /* Skills Section */
 #skills {
     padding: 3rem 1rem;
     text-align: center;
     background: #2575fc;
     color: white;
-    animation: fadeIn 2s ease-out;
 }
 .skills-grid {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 1rem;
-    animation: slideInUp 1.5s ease-out;
 }
 .skill {
     background: #f4d03f;
@@ -196,7 +188,6 @@ header nav ul li a:hover::after {
 #projects {
     padding: 3rem 1rem;
     background: #f4f4f4;
-    animation: fadeIn 2s ease-out;
 }
 .projects-grid {
     display: flex;
@@ -211,7 +202,6 @@ header nav ul li a:hover::after {
     padding: 1rem;
     max-width: 300px;
     text-align: center;
-    opacity: 0;
     animation: fadeInUp 1s ease forwards;
 }
 .project-card img {
@@ -231,9 +221,6 @@ footer {
     text-align: center;
     font-size: 0.9rem;
     letter-spacing: 1px;
-    position: relative;
-    z-index: 10;
-    animation: fadeIn 2s ease-out;
 }
 footer a {
     color: #f4d03f;
@@ -245,43 +232,81 @@ footer a:hover {
     color: #ffd700;
 }
 
-/* Animations */
-@keyframes slideDown {
-    to {
-        transform: translateY(0);
+/* Responsive Design */
+@media (max-width: 768px) {
+    header nav ul {
+        flex-direction: column;
+        gap: 0.5rem;
+        text-align: center;
+    }
+
+    .hero h1 {
+        font-size: 2rem;
+    }
+
+    .hero p {
+        font-size: 1rem;
+    }
+
+    .about-content {
+        flex-direction: column;
+    }
+
+    #skills .skills-grid {
+        flex-direction: column;
+    }
+
+    #projects .projects-grid {
+        flex-direction: column;
     }
 }
-@keyframes fadeIn {
-    from {
-        opacity: 0;
+
+@media (max-width: 480px) {
+    .hero h1 {
+        font-size: 1.5rem;
     }
-    to {
-        opacity: 1;
-    }
-}
-@keyframes slideInLeft {
-    from {
-        transform: translateX(-100%);
-    }
-    to {
-        transform: translateX(0);
+
+    .btn-primary {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
     }
 }
-@keyframes slideInUp {
-    from {
-        transform: translateY(100%);
-    }
-    to {
-        transform: translateY(0);
-    }
+
+.menu-toggle {
+    display: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+    color: white;
+    position: absolute;
+    right: 20px;
+    top: 15px;
+    z-index: 2000;
 }
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(50px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
+
+.mobile-nav {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 60px;
+    right: 0;
+    background: #2C3E50;
+    width: 100%;
+    height: auto;
+    display: none;
+    z-index: 1000;
+}
+
+.mobile-nav.active {
+    display: flex;
+}
+
+.mobile-nav li {
+    text-align: center;
+    padding: 10px 0;
+}
+
+@media (max-width: 768px) {
+    .menu-toggle {
+        display: block;
     }
 }
